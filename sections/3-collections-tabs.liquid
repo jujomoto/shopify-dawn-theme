@@ -1,0 +1,90 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+
+
+{% liquid 
+    assign products_to_display = section.settings.products_per_collection
+%}
+
+<div class="collection section-{{ section.id }}-padding {% if section.settings.full_width %} collection--full-width{% endif %}">
+   
+      <div class="tab-wrapper">
+        <ul class="tab-buttons">
+          {% for block in section.blocks %}
+            <li data-collection="{{ block.id }}" class="{% if forloop.first %}active{% endif %}">
+              {{ block.settings.collection_id.title }}
+            </li>
+          {% endfor %}
+        </ul>
+
+        <div class="tab-content">
+          {% for block in section.blocks %}
+           <div class="tab {% if forloop.first %}active{% endif %}" data-collection="{{ block.id }}" >
+             {% for product in collections[block.settings.collection_id].products limit: products_to_display %}
+                 {% render 'card-product',
+                    card_product: product,
+                    section_id: section.id,
+                    show_quick_add: false
+                  %}
+             {% endfor %}
+           </div>
+          {% endfor %}
+        </div>
+      </div>
+  </div>
+
+{% schema %}
+  {
+    "name": "3-collections-with-tabs",
+    "class":"jm-3-collections-with-tabs page-width",
+    "max_blocks":3,
+    "settings": [
+      {
+      "type": "range",
+      "id": "products_per_collection",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4,
+      "label": "Products To Show"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:sections.featured-collection.settings.full_width.label",
+      "default": false
+    }
+    ],
+    "blocks": [
+      {
+        "type":"collection",
+        "name":"collection-for-tab",
+        "settings": [
+          {
+            "type":"collection",
+            "id":"collection_id",
+            "label":"Collection"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name":"3-Collection-with-tabs",
+        "blocks": [
+          {
+            "type":"collection"
+          },
+          {
+            "type":"collection"
+          },
+          {
+            "type":"collection"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,110 @@
+/* adding a clear items button in cart page   */
+.cart__footer-wrapper .cart__footer .cart__ctas {
+  flex-direction: column;
+} 
+
+/* adding phone number to announcement bar  */
+.announcement-bar-section .utility-bar__grid {
+  position: relative;
+}
+.announcement-bar-section .jm-phone-number {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+.announcement-bar-section .jm-phone-number .jm-phone-number__detail {
+  color: white;
+  margin-left: 5px;
+  text-decoration: none;
+}
+@media (min-width: 768px) {
+  .announcement-bar-section .jm-phone-number .jm-phone-number__detail {
+    pointer-events: none;
+  }
+}
+@media (max-width: 425px) {
+  .announcement-bar-section .utility-bar__grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .announcement-bar-section .jm-phone-number {
+    position: static;                 
+  }
+}
+
+
+/* adding collections in tabs - home page */
+.jm-3-collections-with-tabs {
+  padding: 50px 0;
+}
+.jm-3-collections-with-tabs .tab-wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+.jm-3-collections-with-tabs .tab-wrapper .tab-buttons {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  border-bottom: 1px solid #ccc;
+  padding: 0;
+  margin: 0;
+}
+.jm-3-collections-with-tabs .tab-buttons > li {
+  padding: 1rem;
+  border-radius: 6px 6px 0 0;
+  background-color: #fff;
+  overflow: hidden;
+  border: 1px solid #dbdbdb;
+  border-top-width: 2.5px;
+}
+.jm-3-collections-with-tabs .tab-buttons > li:hover {
+  cursor: pointer;
+  background-color: lightblue;
+  border-color: #ccc;
+}
+.jm-3-collections-with-tabs .tab-buttons > li.active {
+  background-color: #fff;
+  border-bottom-width: 1px;
+  margin-bottom: -1px;
+  padding-bottom: 0;
+  border-color: #ccc;
+  border-bottom-color: #fff;
+}
+.jm-3-collections-with-tabs .tab-wrapper .tab-content {
+  display: block;
+  margin-top: 1rem;
+  width: 100%;
+  height: 100%;
+}
+.jm-3-collections-with-tabs .tab-content .tab {
+  margin: 1rem;
+  transition: all 500ms;
+  display: none;
+} 
+
+.jm-3-collections-with-tabs .tab-content .tab.active {
+  transition: all 500ms;
+  margin: 1rem 0;
+  padding: 1rem;
+  height: 50%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+@media only screen and (max-width:768px) {
+  .jm-3-collections-with-tabs .tab-content .tab.active {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* free shipping bar  */
+#jm-free-shipping-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

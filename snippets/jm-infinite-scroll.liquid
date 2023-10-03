@@ -1,0 +1,73 @@
+{% assign ContainerSelector = productsContainerSelector %}
+{% assign ItemSelector = productItemSelector %}
+
+{% if paginate.pages > 1 %}
+  <a href="{{ paginate.next.url }}" id="more-link"></a>
+  <center>
+    <img class="hc-loading" src="https://cdn.shopify.com/s/files/1/0014/5509/5880/files/loading.gif?1230" />
+  </center>
+
+  <script>
+    const $ = (sel, type) => !type ? document.querySelector(sel) : document.querySelectorAll(sel);
+    const body = $('body');
+    const containerSelector = `{{ ContainerSelector }}`;
+    const productSelector = `${containerSelector} {{ ItemSelector }}`;
+    
+    window.addEventListener('scroll', function () {
+      const loading = {
+        show: () => $('.hc-loading').style.display = 'block',
+        hide: () => $('.hc-loading').style.display = 'none'
+      }
+      body.classList.contains('loading-products') ? loading.show() : loading.hide();
+
+      if ( $('#more-link') && !body.classList.contains('loading-products') ) {
+        let target = document.querySelector('#more-link').getBoundingClientRect().top;
+        
+        console.log('target =>' + target)
+        console.log('innerHeight =>' + window.innerHeight + 400)
+        if (target < window.innerHeight + 400 ) fetchProducts();
+        
+      }
+    })
+
+    function fetchProducts () {
+      console.log('fetching')
+      let link = $('#more-link').getAttribute('href');
+      $('body').classList.add('loading-products');
+
+      console.log(`link: ${link}`)
+
+      fetch(link, {
+        method: "GET", 
+        headers: {
+          'Content-Type': 'text/html'
+        }
+      })
+        .then(res => res.text())
+        .then(res => {
+          console.log('fetched')
+          let parser = new DOMParser();
+          let data = parser.parseFromString(res, "text/html");
+          let nextLink = data.querySelector('#more-link').getAttribute("href");
+          console.log(nextLink)
+          let allProducts = data.querySelectorAll(productSelector);
+          $(containerSelector).append(...allProducts);
+
+          if ( nextLink ) {
+            $('#more-link').setAttribute('href', nextLink);
+          } else {
+            body.classList.remove('loading-products');
+            $('#more-link').remove();
+          }
+        })
+        .catch(e => console.log(e))
+        .finally( () => body.classList.remove('loading-products') );
+      
+
+      
+      
+      
+    }
+  </script>
+
+{% endif %}
