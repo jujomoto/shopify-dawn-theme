@@ -273,7 +273,7 @@
     <script src="{{ 'custom.js' | asset_url }}" defer></script>
   </head>
 
-  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}"
+  <body style="background-color: lightblue;" class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}"
     data-template="{{ template }}" data-template-suffix="{{ template.suffix }}" data-test="thursday-oct-5">
   
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
